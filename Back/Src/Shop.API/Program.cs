@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Shop.API.Compartilhado.Infraestrutura.Dados;
 using Shop.API.Modulos.Clientes.Aplicacao.Servicos;
+using Shop.API.Modulos.Empresas.Aplicacao.Servicos;
+using Shop.API.Modulos.Lojas.Aplicacao.Servicos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,8 @@ builder.Services.AddControllers();
 
 // Services
 builder.Services.AddScoped<ClienteService>();
+builder.Services.AddScoped<EmpresaService>();
+builder.Services.AddScoped<LojaService>();
 
 // OpenAPI
 builder.Services.AddOpenApi();
