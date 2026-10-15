@@ -1,0 +1,134 @@
+
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.table-container {
+  width: 100%;
+  min-height: 180px;
+
+  border: 1px solid #e7e8ec;
+  border-radius: 10px;
+  background: #fff;
+
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+thead {
+  background: #f8f9fa;
+}
+
+th {
+  padding: 15px 18px;
+
+  border-bottom: 1px solid #e7e8ec;
+
+  font-size: 11px;
+  font-weight: 650;
+  color: #777d86;
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+td {
+  padding: 16px 18px;
+
+  border-bottom: 1px solid #f0f1f3;
+
+  font-size: 13px;
+  color: #636973;
+  white-space: nowrap;
+}
+
+tbody tr {
+  transition: background 0.15s;
+
+  &:hover {
+    background: #fafbfc;
+  }
+
+  &:last-child td {
+    border-bottom: none;
+  }
+}
+
+.coluna-acoes {
+  text-align: right;
+  width: 110px;
+}
+
+.table-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  padding: 7px 11px;
+
+  border: 1px solid #e7e8ec;
+  border-radius: 6px;
+
+  background: #fff;
+  color: #555c66;
+
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:hover {
+    background: #f3f4f6;
+    border-color: #d5d8de;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #9298a3;
+    outline-offset: 2px;
+  }
+}
+
+.table-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 180px;
+  padding: 30px;
+
+  text-align: center;
+
+  p {
+    margin: 0;
+    font-size: 13px;
+    color: #858a92;
+  }
+}
+
+// Integração visual com Card sem padding
+// Remove a borda da Table quando o Card já possui uma.
+
+:host-context(.card-sem-padding) .table-container {
+  border: none;
+  border-radius: 0;
+}
+
+// Responsividade
+
+@media (max-width: 768px) {
+  th,
+  td {
+    padding: 13px 14px;
+  }
+}

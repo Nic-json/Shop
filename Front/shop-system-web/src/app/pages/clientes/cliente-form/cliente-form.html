@@ -1,0 +1,92 @@
+
+<form
+  [formGroup]="formulario"
+  (ngSubmit)="salvar()"
+  class="cliente-form"
+>
+
+  <div class="form-field">
+    <label for="nome">Nome completo *</label>
+
+    <input
+      id="nome"
+      type="text"
+      formControlName="nome"
+      placeholder="Nome do cliente"
+    />
+
+    <app-form-error
+      [control]="formulario.controls.nome"
+      [mensagens]="{
+        required: 'O nome é obrigatório.',
+        minlength: 'O nome deve ter pelo menos 3 caracteres.'
+      }"
+    />
+  </div>
+
+  <div class="form-field">
+    <label for="cpfCnpj">CPF/CNPJ</label>
+
+    <input
+      id="cpfCnpj"
+      type="text"
+      formControlName="cpfCnpj"
+      placeholder="CPF ou CNPJ"
+    />
+
+    <app-form-error
+      [control]="formulario.controls.cpfCnpj"
+    />
+  </div>
+
+  <div class="form-field">
+    <label for="email">E-mail</label>
+
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      placeholder="cliente@exemplo.com"
+    />
+
+    <app-form-error
+      [control]="formulario.controls.email"
+      [mensagens]="{
+        email: 'Informe um e-mail válido.'
+      }"
+    />
+  </div>
+
+  <div class="form-field">
+    <label for="telefone">Telefone</label>
+
+    <input
+      id="telefone"
+      type="tel"
+      formControlName="telefone"
+      placeholder="(51) 99999-9999"
+    />
+
+    <app-form-error
+      [control]="formulario.controls.telefone"
+    />
+  </div>
+
+  @if (erroGeral()) {
+    <p class="form-error">{{ erroGeral() }}</p>
+  }
+
+  <div class="form-actions">
+    <button
+      type="submit"
+      [disabled]="!podeSalvar"
+    >
+      {{ salvando()
+        ? 'Salvando...'
+        : modoEdicao
+          ? 'Salvar alterações'
+          : 'Salvar cliente'
+      }}
+    </button>
+  </div>
+</form>

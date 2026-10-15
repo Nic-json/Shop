@@ -1,0 +1,162 @@
+<section class="clientes-page">
+  <div class="clientes-content">
+    <!-- Cabeçalho fixo da página -->
+    <header class="clientes-header">
+      <div class="clientes-heading">
+        <h1>Clientes</h1>
+        <p>Gerencie os clientes cadastrados na sua empresa.</p>
+      </div>
+
+      <button type="button" class="btn-primary" (click)="abrirModalNovoCliente()">
+        <span class="btn-plus">+</span>
+        Novo cliente
+      </button>
+    </header>
+
+    <!-- Card principal: abas e conteúdo -->
+    <app-card [semPadding]="true">
+      <div class="clientes-tabs">
+        <app-tabs
+          [abas]="abas()"
+          [abaAtiva]="abaAtiva()"
+          (abaSelecionada)="selecionarAba($event)"
+          (abaFechada)="fecharAba($event)"
+        />
+      </div>
+
+      @if (abaAtiva() === 'lista') {
+        <!-- Conteúdo da aba Clientes -->
+        <div class="lista-header">
+          <div>
+            <h2>Lista de clientes</h2>
+            <p>Consulte e gerencie os clientes cadastrados.</p>
+          </div>
+        </div>
+
+        <div class="clientes-toolbar">
+          <div class="campo-busca">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m16 16 4 4"></path>
+            </svg>
+
+            <input
+              type="search"
+              placeholder="Buscar por nome, CPF/CNPJ, e-mail ou telefone..."
+              aria-label="Buscar clientes"
+              [value]="busca()"
+              (input)="atualizarBusca($event)"
+            />
+          </div>
+
+          <span class="clientes-contador">
+            {{ clientesFiltrados().length }}
+            {{ clientesFiltrados().length === 1 ? 'cliente' : 'clientes' }}
+          </span>
+        </div>
+
+        @if (erro()) {
+          <div class="clientes-estado">
+            <p>{{ erro() }}</p>
+
+            <button type="button" class="btn-secondary" (click)="carregarClientes()">
+              Tentar novamente
+            </button>
+          </div>
+        } @else {
+          <app-table
+            [colunas]="colunasClientes"
+            [dados]="linhasClientes()"
+            [carregando]="carregando()"
+            [mensagemVazia]="
+              clientes().length === 0
+                ? 'Nenhum cliente cadastrado.'
+                : 'Nenhum resultado encontrado.'
+            "
+            [acaoHabilitada]="true"
+            textoAcao="Abrir"
+            (acao)="abrirClienteDaTabela($event)"
+          />
+        }
+      } @else {
+        <!-- Conteúdo da aba individual -->
+        @for (cliente of clientes(); track cliente.id) {
+          @if (abaAtiva() === 'cliente-' + cliente.id) {
+            <div class="cliente-detalhes">
+              <header class="detalhes-header">
+                <div>
+                  <h2>{{ cliente.nome }}</h2>
+                  <p>Informações cadastrais do cliente.</p>
+                </div>
+
+                <button
+                  type="button"
+                  class="btn-secondary"
+                  (click)="abrirModalEditarCliente(cliente)"
+                >
+                  Editar cliente
+                </button>
+              </header>
+
+              <div class="detalhes-secao">
+                <h3>Dados cadastrais</h3>
+
+                <div class="detalhes-grid">
+                  <div class="detalhe-campo">
+                    <span>Nome completo</span>
+                    <strong>{{ cliente.nome }}</strong>
+                  </div>
+
+                  <div class="detalhe-campo">
+                    <span>CPF/CNPJ</span>
+                    <strong>
+                      {{ cliente.cpfCnpj || 'Não informado' }}
+                    </strong>
+                  </div>
+
+                  <div class="detalhe-campo">
+                    <span>E-mail</span>
+                    <strong>
+                      {{ cliente.email || 'Não informado' }}
+                    </strong>
+                  </div>
+
+                  <div class="detalhe-campo">
+                    <span>Telefone</span>
+                    <strong>
+                      {{ cliente.telefone || 'Não informado' }}
+                    </strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        }
+      }
+    </app-card>
+  </div>
+
+  <!-- Modal de cadastro -->
+  
+@if (modalClienteAberta()) {
+  <app-modal
+    [titulo]="clienteEmEdicao() ? 'Editar cliente' : 'Novo cliente'"
+    [descricao]="clienteEmEdicao()
+      ? 'Atualize os dados cadastrais do cliente.'
+      : 'Preencha os dados para cadastrar um cliente.'"
+    (fechada)="fecharModalCliente()"
+  >
+    <app-cliente-form
+      [cliente]="clienteEmEdicao()"
+      (clienteSalvo)="aoSalvarCliente()"
+    />
+  </app-modal>
+}
+
+</section>

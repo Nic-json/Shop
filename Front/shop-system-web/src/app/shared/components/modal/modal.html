@@ -1,0 +1,38 @@
+
+<div
+  class="modal-overlay"
+  (mousedown)="aoClicarFundo($event)"
+>
+  <section
+    class="modal-container"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-titulo"
+    [attr.aria-describedby]="descricao() ? 'modal-descricao' : null"
+  >
+    <header class="modal-header">
+      <div class="modal-heading">
+        <h2 id="modal-titulo">{{ titulo() }}</h2>
+
+        @if (descricao()) {
+          <p id="modal-descricao">
+            {{ descricao() }}
+          </p>
+        }
+      </div>
+
+      <button
+        type="button"
+        class="modal-close"
+        aria-label="Fechar janela"
+        (click)="fechar()"
+      >
+        ×
+      </button>
+    </header>
+
+    <div class="modal-body">
+      <ng-content />
+    </div>
+  </section>
+</div>

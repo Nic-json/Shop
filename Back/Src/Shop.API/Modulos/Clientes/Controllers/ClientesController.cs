@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Mvc;
 using Shop.API.Modulos.Clientes.Aplicacao.DTOs;
 using Shop.API.Modulos.Clientes.Aplicacao.Servicos;
@@ -24,26 +25,16 @@ public class ClientesController : ControllerBase
             "11111111-1111-1111-1111-111111111111"
         );
 
-        try
-        {
-            var clienteId = await _clienteService.CriarAsync(
-                request,
-                empresaId
-            );
+        var clienteId = await _clienteService.CriarAsync(
+            request,
+            empresaId
+        );
 
-            return StatusCode(201, new
-            {
-                Id = clienteId,
-                Mensagem = "Cliente cadastrado com sucesso."
-            });
-        }
-        catch (ArgumentException ex)
+        return StatusCode(201, new
         {
-            return BadRequest(new
-            {
-                Mensagem = ex.Message
-            });
-        }
+            Id = clienteId,
+            Mensagem = "Cliente cadastrado com sucesso."
+        });
     }
 
     [HttpGet]
@@ -83,37 +74,29 @@ public class ClientesController : ControllerBase
 
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Atualizar(
-    Guid id,
-    [FromBody] AtualizarClienteRequest request)
+        Guid id,
+        [FromBody] AtualizarClienteRequest request)
     {
         // Empresa temporária para testes locais
         var empresaId = Guid.Parse(
             "11111111-1111-1111-1111-111111111111"
         );
 
-        try
-        {
-            var atualizado = await _clienteService.AtualizarAsync(
-                id,
-                empresaId,
-                request
-            );
+        var atualizado = await _clienteService.AtualizarAsync(
+            id,
+            empresaId,
+            request
+        );
 
-            if (!atualizado)
-                return NotFound(new
-                {
-                    Mensagem = "Cliente não encontrado."
-                });
-
-            return NoContent();
-        }
-        catch (ArgumentException ex)
+        if (!atualizado)
         {
-            return BadRequest(new
+            return NotFound(new
             {
-                Mensagem = ex.Message
+                Mensagem = "Cliente não encontrado."
             });
         }
+
+        return NoContent();
     }
 
     [HttpDelete("{id:guid}")]
@@ -129,12 +112,13 @@ public class ClientesController : ControllerBase
         );
 
         if (!desativado)
+        {
             return NotFound(new
             {
                 Mensagem = "Cliente não encontrado ou já desativado."
             });
+        }
 
         return NoContent();
     }
-
 }

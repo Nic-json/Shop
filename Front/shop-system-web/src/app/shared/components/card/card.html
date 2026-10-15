@@ -1,0 +1,21 @@
+
+<section
+  class="card"
+  [class.card-sem-padding]="semPadding()"
+>
+  @if (titulo() || descricao()) {
+    <header class="card-header">
+      @if (titulo()) {
+        <h2>{{ titulo() }}</h2>
+      }
+
+      @if (descricao()) {
+        <p>{{ descricao() }}</p>
+      }
+    </header>
+  }
+
+  <div class="card-content">
+    <ng-content />
+  </div>
+</section>

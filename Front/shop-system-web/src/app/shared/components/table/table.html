@@ -1,0 +1,60 @@
+
+<div class="table-container">
+  @if (carregando()) {
+    <div class="table-state">
+      <p>Carregando registros...</p>
+    </div>
+  } @else if (dados().length === 0) {
+    <div class="table-state">
+      <p>{{ mensagemVazia() }}</p>
+    </div>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          @for (coluna of colunas(); track coluna.campo) {
+            <th
+              [style.width]="coluna.largura || null"
+              [style.text-align]="coluna.alinhamento || 'left'"
+            >
+              {{ coluna.titulo }}
+            </th>
+          }
+
+          @if (acaoHabilitada()) {
+            <th class="coluna-acoes">
+              Ações
+            </th>
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (registro of dados(); track registro) {
+          <tr>
+            @for (coluna of colunas(); track coluna.campo) {
+              <td
+                [style.text-align]="coluna.alinhamento || 'left'"
+              >
+                {{ obterValor(registro, coluna.campo) }}
+              </td>
+            }
+
+            @if (acaoHabilitada()) {
+              <td class="coluna-acoes">
+                <button
+                  type="button"
+                  class="table-action"
+                  (click)="executarAcao(registro)"
+                >
+                  {{ textoAcao() }}
+                  <span aria-hidden="true">→</span>
+                </button>
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

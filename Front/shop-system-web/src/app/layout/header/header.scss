@@ -1,0 +1,47 @@
+.tabs-bar {
+  height: 66px;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e6ea;
+}
+
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tab {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #777b83;
+  background: #ffffff;
+}
+
+.tab.active {
+  background: #e9bca8;
+  color: #25282d;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #777b83;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #e9bca8;
+  color: #25282d;
+  font-size: 12px;
+  font-weight: 700;
+}

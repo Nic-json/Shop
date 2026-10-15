@@ -1,0 +1,29 @@
+
+<nav class="tabs" aria-label="Abas da página">
+  @for (aba of abas(); track aba.id) {
+    <div
+      class="tab"
+      [class.active]="abaAtiva() === aba.id"
+    >
+      <button
+        type="button"
+        class="tab-title"
+        [attr.aria-selected]="abaAtiva() === aba.id"
+        (click)="selecionar(aba.id)"
+      >
+        {{ aba.titulo }}
+      </button>
+
+      @if (aba.fechavel) {
+        <button
+          type="button"
+          class="tab-close"
+          [attr.aria-label]="'Fechar aba ' + aba.titulo"
+          (click)="fechar(aba.id)"
+        >
+          ×
+        </button>
+      }
+    </div>
+  }
+</nav>
